@@ -2,9 +2,16 @@
 
 namespace Zadanie_Wisielec
 {
+    
     class WordBank
     {
-        //przechowywanie słów
+        private static string[] ListaSłów = {"kot","pies","kurczak"};
+        public static string RandomWordGet()
+        {
+            var RNG = new Random();
+            int index = RNG.Next(ListaSłów.Length);
+            return ListaSłów[index];
+        }
     }
     class Game
     {
@@ -20,8 +27,9 @@ namespace Zadanie_Wisielec
     {
         static void Main(string[] args)
         {
-            //Losowanie słowa
+            string WybraneSłowo = WordBank.RandomWordGet();
             Console.WriteLine("Hello World!");
+            Console.WriteLine("Wybrane słowo to .: " + WybraneSłowo);
         }
     }
 }
