@@ -6,7 +6,7 @@ namespace Zadanie_Wisielec
     
     class WordBank
     {
-        private static string[] ListaSłów = {"kot","pies","kurczak"};
+        private static string[] ListaSłów = {"kot","pies","kurczak","słońce"}; // hasła muszą być małymi np ,"onomatopeja","auto","eufemizm","aluzja","oksymoron", "pleonazm","wiatrak","rower","kredka"
         public static string RandomWordGet()
         {
             var RNG = new Random();
@@ -138,44 +138,52 @@ namespace Zadanie_Wisielec
             while (exitBool == false)
             {
                 Console.Clear();
+
+                int Wincheckint = 0;
                 Console.WriteLine(""); // informacje dotyczące gry ogólnie
                 Console.WriteLine($"Liczba prób .: {10 - Błędy}"); // informacje dotyczące tej rozgrywki
                 Gra.Draw(Błędy);
                 Console.Write("Litery hasła .: ");
-                for (int i = 0; i < WybraneSłowo.Length; i++)
+                for (int i = 0; i < WybraneSłowo.Length; i++)// per każda litera hasła 
                 {
-                    char DanaLitera = WybraneSłowo[i];
-                    if (OdgadnięteSłowa.Contains(DanaLitera))
+                    char DanaLitera = WybraneSłowo[i]; //zamiana litery słowa na char
+                    if (OdgadnięteSłowa.Contains(DanaLitera))// jeśli lista posiada dany char
                     {
-                        Console.Write(DanaLitera);
+                        Console.Write(DanaLitera);// zapisz te litere
+                        Wincheckint++;// sprawdzamy czy gracz nie wygrał
                     }
                     else
                     {
-                        Console.Write("_");
+                        Console.Write("_");// litera dalej ukryta
                     }      
+                }
+                if(Wincheckint == WybraneSłowo.Length)
+                {
+                    Console.Write("\nGRATULACJE !!! , ODGADŁEŚ HASŁO !!!");
+                    WinCall(); //skoro break w tym wypadku działa to po co tu ta funkcja ? 
+                    break;
                 }
                 Console.WriteLine("\nWpisz literę .:");
                 UsrInputString = Console.ReadLine();
-                UsrInputString = UsrInputString.ToLower();
+                UsrInputString = UsrInputString.ToLower(); // zamiana na małe
                 if (UsrInputString.Length == 1)
                 {
                     int Miss = 0;
-                    char Lettr = UsrInputString[0];
-                    for (int i = 0;i < WybraneSłowo.Length; i++)
+                    char Lettr = UsrInputString[0]; // trzeba zamienić literę ze string na char 
+                    for (int i = 0;i < WybraneSłowo.Length; i++) //per każda litera w słowie
                     {
-                        if (Lettr == WybraneSłowo[i])
+                        if (Lettr == WybraneSłowo[i])//jeśli litera jest w wybranym słowie 
                         {
-                            Console.WriteLine("Jest taka litera w słowie");
-                            OdgadnięteSłowa.Add(Lettr);
+                            OdgadnięteSłowa.Add(Lettr);// jest taka litera w słowie
                             break;
                         }
                         else
                         {
-                            Miss++;
+                            Miss++; //dodaje sie miss
                         }
                         
                     }
-                    if (Miss == WybraneSłowo.Length)
+                    if (Miss == WybraneSłowo.Length) //jeśli litera którą gracz wpisał missneła wszystkie litery danego słowa
                     {
                         ZaliczBłąd();
                     }
@@ -195,7 +203,6 @@ namespace Zadanie_Wisielec
         {
             if (Błędy <= 9)
             {
-                Console.WriteLine("Źle");
                 Błędy++;
             }
         }
