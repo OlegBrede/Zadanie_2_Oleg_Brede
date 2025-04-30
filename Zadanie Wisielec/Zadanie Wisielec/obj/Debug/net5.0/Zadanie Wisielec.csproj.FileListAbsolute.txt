@@ -1,0 +1,16 @@
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\bin\Debug\net5.0\Zadanie Wisielec.exe
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\bin\Debug\net5.0\Zadanie Wisielec.deps.json
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\bin\Debug\net5.0\Zadanie Wisielec.runtimeconfig.json
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\bin\Debug\net5.0\Zadanie Wisielec.runtimeconfig.dev.json
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\bin\Debug\net5.0\Zadanie Wisielec.dll
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\bin\Debug\net5.0\ref\Zadanie Wisielec.dll
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\bin\Debug\net5.0\Zadanie Wisielec.pdb
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\obj\Debug\net5.0\Zadanie Wisielec.csproj.AssemblyReference.cache
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\obj\Debug\net5.0\Zadanie Wisielec.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\obj\Debug\net5.0\Zadanie Wisielec.AssemblyInfoInputs.cache
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\obj\Debug\net5.0\Zadanie Wisielec.AssemblyInfo.cs
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\obj\Debug\net5.0\Zadanie Wisielec.csproj.CoreCompileInputs.cache
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\obj\Debug\net5.0\Zadanie Wisielec.dll
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\obj\Debug\net5.0\ref\Zadanie Wisielec.dll
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\obj\Debug\net5.0\Zadanie Wisielec.pdb
+C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\obj\Debug\net5.0\Zadanie Wisielec.genruntimeconfig.cache

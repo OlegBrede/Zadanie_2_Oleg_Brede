@@ -1,0 +1,10 @@
+is_global = true
+build_property.TargetFramework = net5.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.PublishSingleFile = 
+build_property.IncludeAllContentForSelfExtract = 
+build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
+build_property.RootNamespace = Zadanie_Wisielec
+build_property.ProjectDir = C:\Users\olegb\OneDrive\Pulpit\WSB folder\2 połowa 1 semestr\OOP pdfy i zadania\Zadanie 2 do 24.05\Zadanie Wisielec\Zadanie Wisielec\
