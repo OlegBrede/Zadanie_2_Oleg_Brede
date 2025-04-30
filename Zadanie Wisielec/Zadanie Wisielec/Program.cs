@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Zadanie_Wisielec
 {
@@ -15,21 +16,188 @@ namespace Zadanie_Wisielec
     }
     class Game
     {
+        private char[,] canvas;
+        private int rows = 7, cols = 7;
+        private List<Action> drawSteps;
+
+        public Game()
+        {
+            canvas = new char[rows, cols];
+            // definiujemy kolejne kroki rysowania
+            drawSteps = new List<Action>
+            {
+                DrawMainPost,
+                DrawLeftSupport,
+                DrawRightSupport,
+                DrawCrane,
+                DrawRope,
+                DrawHead,
+                DrawBody,
+                DrawLeftArm,
+                DrawRightArm,
+                DrawLegs
+            };
+        }
+
+        // metoda wywoływana przy każdej zmianie liczby błędów
+        public void Draw(int Błędy)
+        {
+            ClearCanvas();
+            // wykonaj kolejne kroki rysowania aż do liczby błędów
+            for (int i = 0; i < Błędy && i < drawSteps.Count; i++)
+                drawSteps[i]();
+            Render();
+        }
+
+        private void ClearCanvas()
+        {
+            for (int r = 0; r < rows; r++)
+                for (int c = 0; c < cols; c++)
+                    canvas[r, c] = ' ';
+        }
+
+        private void Render()
+        {
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                    Console.Write(canvas[r, c]);
+                Console.WriteLine();
+            }
+        }
+        private void DrawMainPost()
+        {
+            for (int r = 0; r < 6; r++) canvas[r, 1] = '│';
+        }
+
+        private void DrawLeftSupport()
+        {
+            canvas[6, 0] = '/';
+        }
+
+        private void DrawRightSupport()
+        {
+            canvas[6, 2] = '\\';
+        }
+
+        private void DrawCrane()
+        {
+            for (int c = 1; c < 5; c++) canvas[0, c] = '─';
+            canvas[0, 1] = '┌'; canvas[0, 4] = '┐';
+        }
+
+        private void DrawRope()
+        {
+            for (int r = 1; r < 2; r++) canvas[r, 4] = '│';
+        }
+
+        private void DrawHead()
+        {
+            canvas[2, 4] = '0';
+        }
+
+        private void DrawBody()
+        {
+            canvas[3, 4] = '│';
+        }
+
+        private void DrawLeftArm()
+        {
+            canvas[3, 3] = '/';
+        }
+
+        private void DrawRightArm()
+        {
+            canvas[3, 5] = '\\';
+        }
+
+        private void DrawLegs()
+        {
+            canvas[4, 3] = '/'; canvas[4, 5] = '\\';
+        }
         //odsłanianie liter
         //limit błędów
         //stan gry
     }
+
     class Player
     {
-        //punktacja ?
+        public int Wygrane = 0;
+        public int Przegrane = 0;
     }
     class Program
     {
+    static int Błędy = 0;
+    static bool exitBool = false;
         static void Main(string[] args)
         {
+            var Gra = new Game();
             string WybraneSłowo = WordBank.RandomWordGet();
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Wybrane słowo to .: " + WybraneSłowo);
+            List<char> OdgadnięteSłowa = new List<char>();
+            string UsrInputString;      
+            while (exitBool == false)
+            {
+                Console.Clear();
+                Console.WriteLine(""); // informacje dotyczące gry ogólnie
+                Console.WriteLine($"Liczba prób .: {10 - Błędy}"); // informacje dotyczące tej rozgrywki
+                Gra.Draw(Błędy);
+                Console.Write("Litery hasła .: ");
+                for (int i = 0; i < WybraneSłowo.Length; i++)
+                {
+                    char DanaLitera = WybraneSłowo[i];
+                    if (OdgadnięteSłowa.Contains(DanaLitera))
+                    {
+                        Console.Write(DanaLitera);
+                    }
+                    else
+                    {
+                        Console.Write("_");
+                    }      
+                }
+                Console.WriteLine("\nWpisz literę .:");
+                UsrInputString = Console.ReadLine();
+                UsrInputString = UsrInputString.ToLower();
+                if (UsrInputString.Length == 1)
+                {
+                    int Miss = 0;
+                    char Lettr = UsrInputString[0];
+                    for (int i = 0;i < WybraneSłowo.Length; i++)
+                    {
+                        if (Lettr == WybraneSłowo[i])
+                        {
+                            Console.WriteLine("Jest taka litera w słowie");
+                            OdgadnięteSłowa.Add(Lettr);
+                            break;
+                        }
+                        else
+                        {
+                            Miss++;
+                        }
+                        
+                    }
+                    if (Miss == WybraneSłowo.Length)
+                    {
+                        ZaliczBłąd();
+                    }
+                }
+                else
+                {
+                    ZaliczBłąd();
+                }
+            }   
+
+        }
+        static void WinCall()
+        {
+            exitBool = true;
+        }
+        static void ZaliczBłąd()
+        {
+            if (Błędy <= 9)
+            {
+                Console.WriteLine("Źle");
+                Błędy++;
+            }
         }
     }
 }
