@@ -6,7 +6,7 @@ namespace Zadanie_Wisielec
     
     class WordBank
     {
-        private static string[] ListaSłów = {"kot","pies","kurczak","słońce"}; // hasła muszą być małymi np ,"onomatopeja","auto","eufemizm","aluzja","oksymoron", "pleonazm","wiatrak","rower","kredka"
+        private static string[] ListaSłów = {"słońce","onomatopeja","auto","eufemizm","aluzja","oksymoron", "pleonazm","wiatrak","rower","kredka","kot","pies","kurczak","lampa","źdźbło","czapka"}; // hasła muszą być małymi np 
         public static string RandomWordGet()
         {
             var RNG = new Random();
@@ -115,7 +115,7 @@ namespace Zadanie_Wisielec
         {
             canvas[4, 3] = '/'; canvas[4, 5] = '\\';
         }
-        //odsłanianie liter
+        //odasłanianie liter do funkcji musisz dać 
         //limit błędów
         //stan gry
     }
@@ -134,33 +134,50 @@ namespace Zadanie_Wisielec
             var Gra = new Game();
             string WybraneSłowo = WordBank.RandomWordGet();
             List<char> OdgadnięteSłowa = new List<char>();
+            List<char> NieodpowiednieSłowa = new List<char>();
             string UsrInputString;      
             while (exitBool == false)
             {
                 Console.Clear();
 
-                int Wincheckint = 0;
+                int Wincheckint = 0; // wartość do sprawdzenia stanu wygrania 
                 Console.WriteLine(""); // informacje dotyczące gry ogólnie
-                Console.WriteLine($"Liczba prób .: {10 - Błędy}"); // informacje dotyczące tej rozgrywki
-                Gra.Draw(Błędy);
-                Console.Write("Litery hasła .: ");
-                for (int i = 0; i < WybraneSłowo.Length; i++)// per każda litera hasła 
+                Console.WriteLine($"Liczba prób .: {10 - Błędy}" + "   Litery które już były .: "); // informacje dotyczące tej rozgrywki
+                if(NieodpowiednieSłowa.Count != 0)
                 {
-                    char DanaLitera = WybraneSłowo[i]; //zamiana litery słowa na char
-                    if (OdgadnięteSłowa.Contains(DanaLitera))// jeśli lista posiada dany char
+                    for (int i = 0; i < NieodpowiednieSłowa.Count; i++)
                     {
-                        Console.Write(DanaLitera);// zapisz te litere
-                        Wincheckint++;// sprawdzamy czy gracz nie wygrał
+                        Console.Write(NieodpowiednieSłowa[i] + ", ");
                     }
-                    else
+                }
+                Gra.Draw(Błędy); //narysuj wisielca w danym stadium
+                Console.Write("Litery hasła .: ");
+                if(Błędy >= 10)
+                {
+                    Console.Write(WybraneSłowo + "\n PRZEGRAŁEŚ \n\n\n");
+                    break;
+                }
+                else
+                {
+                    for (int i = 0; i < WybraneSłowo.Length; i++)// per każda litera hasła 
                     {
-                        Console.Write("_");// litera dalej ukryta
-                    }      
+                        char DanaLitera = WybraneSłowo[i]; //zamiana litery słowa na char
+                        if (OdgadnięteSłowa.Contains(DanaLitera))// jeśli lista posiada dany char
+                        {
+                            Console.Write(DanaLitera);// zapisz te litere
+                            Wincheckint++;// sprawdzamy czy gracz nie wygrał
+                        }
+                        else
+                        {
+                            //NieodpowiednieSłowa.Add(DanaLitera);
+                            Console.Write("_");// litera dalej ukryta
+                        }      
+                    }
                 }
                 if(Wincheckint == WybraneSłowo.Length)
                 {
-                    Console.Write("\nGRATULACJE !!! , ODGADŁEŚ HASŁO !!!");
-                    WinCall(); //skoro break w tym wypadku działa to po co tu ta funkcja ? 
+                    Console.Write("\n GRATULACJE !!! , ODGADŁEŚ HASŁO !!!\n\n\n");
+                    //WinCall(); //skoro break w tym wypadku działa to po co tu ta funkcja ? 
                     break;
                 }
                 Console.WriteLine("\nWpisz literę .:");
