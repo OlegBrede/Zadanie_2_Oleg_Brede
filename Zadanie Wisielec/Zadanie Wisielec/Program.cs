@@ -6,7 +6,7 @@ namespace Zadanie_Wisielec
     
     class WordBank
     {
-        private static string[] ListaSłów = {"słońce","onomatopeja","auto","eufemizm","aluzja","oksymoron", "pleonazm","wiatrak","rower","kredka","kot","pies","kurczak","lampa","źdźbło","czapka"}; // hasła muszą być małymi np 
+        private static string[] ListaSłów = {"słońce","onomatopeja","auto","eufemizm","aluzja","oksymoron", "pleonazm","wiatrak","rower","kredka","kot","pies","kurczak","lampa","czapka","traktor","szpieg","kwadrat"}; // hasła muszą być małymi np 
         public static string RandomWordGet()
         {
             var RNG = new Random();
