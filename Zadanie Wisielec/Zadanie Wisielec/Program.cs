@@ -1,29 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Zadanie_Wisielec
 {
-    
+    enum GameState
+    {
+        Playing,
+        Won,
+        Lost
+    }
+
     class WordBank
     {
-        private static string[] ListaSłów = {"słońce","onomatopeja","auto","eufemizm","aluzja","oksymoron", "pleonazm","wiatrak","rower","kredka","kot","pies","kurczak","lampa","czapka","traktor","szpieg","kwadrat"}; // hasła muszą być małymi np 
+        private static readonly string[] ListaSłów =
+        {
+            "słońce","onomatopeja","auto","eufemizm","aluzja",
+            "oksymoron","pleonazm","wiatrak","rower","kredka",
+            "kot","pies","kurczak","lampa","źdźbło","czapka"
+        };
+
         public static string RandomWordGet()
         {
-            var RNG = new Random();
-            int index = RNG.Next(ListaSłów.Length);
+            var rng = new Random();
+            int index = rng.Next(ListaSłów.Length);
             return ListaSłów[index];
         }
     }
+
     class Game
     {
+        private readonly string secret;
+        private readonly HashSet<char> correct = new HashSet<char>();
+        private readonly HashSet<char> wrong = new HashSet<char>();
+        private readonly int maxErrors = 10;
+
         private char[,] canvas;
         private int rows = 7, cols = 7;
         private List<Action> drawSteps;
 
-        public Game()
+        public GameState State
         {
+            get
+            {
+                if (Errors >= maxErrors) return GameState.Lost;
+                if (secret.All(c => correct.Contains(c))) return GameState.Won;
+                return GameState.Playing;
+            }
+        }
+
+        public int Errors { get { return wrong.Count; } }
+
+        public Game(string word)
+        {
+            secret = word;
+            // przygotuj canvas i kroki rysowania
             canvas = new char[rows, cols];
-            // definiujemy kolejne kroki rysowania
             drawSteps = new List<Action>
             {
                 DrawMainPost,
@@ -39,12 +71,10 @@ namespace Zadanie_Wisielec
             };
         }
 
-        // metoda wywoływana przy każdej zmianie liczby błędów
-        public void Draw(int Błędy)
+        public void Draw(int errors)
         {
             ClearCanvas();
-            // wykonaj kolejne kroki rysowania aż do liczby błędów
-            for (int i = 0; i < Błędy && i < drawSteps.Count; i++)
+            for (int i = 0; i < errors && i < drawSteps.Count; i++)
                 drawSteps[i]();
             Render();
         }
@@ -65,6 +95,7 @@ namespace Zadanie_Wisielec
                 Console.WriteLine();
             }
         }
+
         private void DrawMainPost()
         {
             for (int r = 0; r < 6; r++) canvas[r, 1] = '│';
@@ -88,7 +119,7 @@ namespace Zadanie_Wisielec
 
         private void DrawRope()
         {
-            for (int r = 1; r < 2; r++) canvas[r, 4] = '│';
+            canvas[1, 4] = '│';
         }
 
         private void DrawHead()
@@ -115,113 +146,57 @@ namespace Zadanie_Wisielec
         {
             canvas[4, 3] = '/'; canvas[4, 5] = '\\';
         }
-        //odasłanianie liter do funkcji musisz dać 
-        //limit błędów
-        //stan gry
+
+        public string GetMaskedWord()
+        {
+            return string.Concat(secret.Select(c => correct.Contains(c) ? c : '_'));
+        }
+
+        public void Guess(char c)
+        {
+            if (State != GameState.Playing) return;
+            if (c == '\0') { wrong.Add(c); return; }
+            if (secret.Contains(c))
+                correct.Add(c);
+            else
+                wrong.Add(c);
+        }
+
+        public IEnumerable<char> WrongGuesses() { return wrong; }
     }
 
-    class Player
-    {
-        public int Wygrane = 0;
-        public int Przegrane = 0;
-    }
     class Program
     {
-    static int Błędy = 0;
-    static bool exitBool = false;
         static void Main(string[] args)
         {
-            var Gra = new Game();
-            string WybraneSłowo = WordBank.RandomWordGet();
-            List<char> OdgadnięteSłowa = new List<char>();
-            List<char> NieodpowiednieSłowa = new List<char>();
-            string UsrInputString;      
-            while (exitBool == false)
+            string word = WordBank.RandomWordGet();
+            Game game = new Game(word);
+
+            while (game.State == GameState.Playing)
             {
                 Console.Clear();
+                Console.WriteLine("Pozostało prób: " + (10 - game.Errors));
+                Console.WriteLine("Błędne litery: " + string.Join(", ", game.WrongGuesses()));
+                game.Draw(game.Errors);
 
-                int Wincheckint = 0; // wartość do sprawdzenia stanu wygrania 
-                Console.WriteLine(""); // informacje dotyczące gry ogólnie
-                Console.WriteLine($"Liczba prób .: {10 - Błędy}" + "   Litery które już były .: "); // informacje dotyczące tej rozgrywki
-                if(NieodpowiednieSłowa.Count != 0)
-                {
-                    for (int i = 0; i < NieodpowiednieSłowa.Count; i++)
-                    {
-                        Console.Write(NieodpowiednieSłowa[i] + ", ");
-                    }
-                }
-                Gra.Draw(Błędy); //narysuj wisielca w danym stadium
-                Console.Write("Litery hasła .: ");
-                if(Błędy >= 10)
-                {
-                    Console.Write(WybraneSłowo + "\n PRZEGRAŁEŚ \n\n\n");
-                    break;
-                }
-                else
-                {
-                    for (int i = 0; i < WybraneSłowo.Length; i++)// per każda litera hasła 
-                    {
-                        char DanaLitera = WybraneSłowo[i]; //zamiana litery słowa na char
-                        if (OdgadnięteSłowa.Contains(DanaLitera))// jeśli lista posiada dany char
-                        {
-                            Console.Write(DanaLitera);// zapisz te litere
-                            Wincheckint++;// sprawdzamy czy gracz nie wygrał
-                        }
-                        else
-                        {
-                            //NieodpowiednieSłowa.Add(DanaLitera);
-                            Console.Write("_");// litera dalej ukryta
-                        }      
-                    }
-                }
-                if(Wincheckint == WybraneSłowo.Length)
-                {
-                    Console.Write("\n GRATULACJE !!! , ODGADŁEŚ HASŁO !!!\n\n\n");
-                    //WinCall(); //skoro break w tym wypadku działa to po co tu ta funkcja ? 
-                    break;
-                }
-                Console.WriteLine("\nWpisz literę .:");
-                UsrInputString = Console.ReadLine();
-                UsrInputString = UsrInputString.ToLower(); // zamiana na małe
-                if (UsrInputString.Length == 1)
-                {
-                    int Miss = 0;
-                    char Lettr = UsrInputString[0]; // trzeba zamienić literę ze string na char 
-                    for (int i = 0;i < WybraneSłowo.Length; i++) //per każda litera w słowie
-                    {
-                        if (Lettr == WybraneSłowo[i])//jeśli litera jest w wybranym słowie 
-                        {
-                            OdgadnięteSłowa.Add(Lettr);// jest taka litera w słowie
-                            break;
-                        }
-                        else
-                        {
-                            Miss++; //dodaje sie miss
-                        }
-                        
-                    }
-                    if (Miss == WybraneSłowo.Length) //jeśli litera którą gracz wpisał missneła wszystkie litery danego słowa
-                    {
-                        ZaliczBłąd();
-                    }
-                }
-                else
-                {
-                    ZaliczBłąd();
-                }
-            }   
+                Console.Write("Hasło: ");
+                Console.WriteLine(game.GetMaskedWord());
 
-        }
-        static void WinCall()
-        {
-            exitBool = true;
-        }
-        static void ZaliczBłąd()
-        {
-            if (Błędy <= 9)
-            {
-                Błędy++;
+                Console.Write("Podaj literę: ");
+                string input = Console.ReadLine();
+                char guess = '\0';
+                if (!string.IsNullOrEmpty(input) && input.Length == 1)
+                    guess = char.ToLower(input[0]);
+                game.Guess(guess);
             }
+
+            Console.Clear();
+            game.Draw(game.Errors);
+            if (game.State == GameState.Won)
+                Console.WriteLine("Gratulacje! Odgadłeś: " + word);
+            else
+                Console.WriteLine("Przegrałeś. Hasło to: " + word);
         }
     }
 }
+
